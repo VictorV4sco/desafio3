@@ -29,4 +29,25 @@ public class ClientService {
 		    return ClientMapper.INSTANCE.toDTOPage(clients);
 		}
 	
+	@Transactional
+	public ClientDTO insert (ClientDTO dto) {
+		Client client = ClientMapper.INSTANCE.toEntity(dto); // Converte o DTO para a entidade Client
+		Client savedClient = repository.save(client);// Salva a entidade no banco de dados
+		return ClientMapper.INSTANCE.toDTO(savedClient);// Converte a entidade salva de volta para DTO
+		
+	}
+	
+	@Transactional
+	public ClientDTO update(Long id, ClientDTO dto) {
+		Client client = repository.getReferenceById(id);
+		ClientMapper.INSTANCE.updateFromDTO(dto, client);
+		Client updatedClient = repository.save(client);
+		return ClientMapper.INSTANCE.toDTO(updatedClient);
+	}
+	
+	@Transactional
+	public void delete(long id) {
+		repository.deleteById(id);
+	}
+	
 }

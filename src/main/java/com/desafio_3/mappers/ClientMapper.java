@@ -3,6 +3,8 @@ package com.desafio_3.mappers;
 import java.util.List;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -26,5 +28,9 @@ public interface ClientMapper {
         return new PageImpl<>(clientDTOs, clientPage.getPageable(), clientPage.getTotalElements());
       //Mapper não consegue mapear tipos como o page, apenas tipo List. Por isso a conversão
 	}
+	
+	// Método adicional para atualizar a entidade com os dados do DTO
+    @Mapping(target = "id", ignore = true) // Ignora o id (não queremos sobrescrevê-lo)
+    void updateFromDTO(ClientDTO clientDTO, @MappingTarget Client client);
 	
 }
