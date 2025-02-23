@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.desafio_3.dto.ClientDTO;
 import com.desafio_3.entities.Client;
+import com.desafio_3.mappers.ClientMapper;
 import com.desafio_3.repositories.ClientRepository;
 
 @Service
@@ -13,15 +14,21 @@ public class ClientService {
 	@Autowired
 	private ClientRepository repository;
 	
+//	public ClientDTO findById(Long id) {
+//		Client client = repository.findById(id).get();
+//		return new 
+//				ClientDTO(
+//						client.getId(), 
+//						client.getName(), 
+//						client.getCpf(), 
+//						client.getIncome(), 
+//						client.getBirthDate(), 
+//						client.getChildren());
+//	}
+	
 	public ClientDTO findById(Long id) {
 		Client client = repository.findById(id).get();
-		return new 
-				ClientDTO(
-						client.getId(), 
-						client.getName(), 
-						client.getCpf(), 
-						client.getIncome(), 
-						client.getBirthDate(), 
-						client.getChildren());
+		return ClientMapper.INSTANCE.toDTO(client);
 	}
+	
 }
